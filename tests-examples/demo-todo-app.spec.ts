@@ -21,7 +21,7 @@ test.describe('New Todo', () => {
 
     // Make sure the list only has one todo item.
     await expect(page.getByTestId('todo-title')).toHaveText([
-      TODO_ITEMS[1] // intentionally changed here to fail the test
+      TODO_ITEMS[0], // intentionally changed here to fail the test
     ]);
 
     // Create 2nd todo.
@@ -199,20 +199,28 @@ test.describe('@smoke - Editing', () => {
 
   test('should hide other controls when editing', async ({ page }) => {
     // const todoItem = page.getByTestId('todo-item').nth(1);
-    const todoItem = page.getByTestId('todo-item'); // intentionally changed here to fail the test
+    const todoItem = page.getByTestId('todo-item').nth(1); // intentionally changed here to fail the test
     await todoItem.dblclick();
     await expect(todoItem.getByRole('checkbox')).not.toBeVisible();
-    await expect(todoItem.locator('label', {
-      hasText: TODO_ITEMS[1],
-    })).not.toBeVisible();
+    await expect(
+      todoItem.locator('label', {
+        hasText: TODO_ITEMS[1],
+      })
+    ).not.toBeVisible();
     await checkNumberOfTodosInLocalStorage(page, 3);
   });
 
   test('should save edits on blur', async ({ page }) => {
     const todoItems = page.getByTestId('todo-item');
     await todoItems.nth(1).dblclick();
-    await todoItems.nth(1).getByRole('textbox', { name: 'Edit' }).fill('buy some sausages');
-    await todoItems.nth(1).getByRole('textbox', { name: 'Edit' }).dispatchEvent('blur');
+    await todoItems
+      .nth(1)
+      .getByRole('textbox', { name: 'Edit' })
+      .fill('buy some sausages');
+    await todoItems
+      .nth(1)
+      .getByRole('textbox', { name: 'Edit' })
+      .dispatchEvent('blur');
 
     await expect(todoItems).toHaveText([
       TODO_ITEMS[0],
