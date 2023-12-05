@@ -1,11 +1,11 @@
-import { defineConfig, devices } from '@playwright/test';
-import baseEnvUrl from './utils/environmentBaseUrl';
+import { defineConfig, devices } from '@playwright/test'
+import baseEnvUrl from './utils/environmentBaseUrl'
 
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-require('dotenv').config();
+require('dotenv').config()
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -162,4 +162,4 @@ export default defineConfig({
   //   url: 'http://127.0.0.1:3000',
   //   reuseExistingServer: !process.env.CI,
   // },
-});
+})
