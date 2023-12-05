@@ -15,7 +15,7 @@ test('check Java page', async ({ page }) => {
   await page.goto('https://playwright.dev/')
   await page.getByRole('link', { name: 'Get started' }).click()
   await page.getByRole('button', { name: 'Node.js' }).hover()
-  // await page.getByText('Java', { exact: true }).click(); // in case the locator above doesn't work, you can use this line. Remove the line above and use this one instead.
+  // await page.getByText('Java', { exact: true }).click(); // in case the locator above doesn't work, you can use this line. Remove the line below and use this one instead.
   await page.getByRole('navigation', { name: 'Main' }).getByText('Java').click()
   await expect(page).toHaveURL('https://playwright.dev/java/docs/intro')
   await expect(
