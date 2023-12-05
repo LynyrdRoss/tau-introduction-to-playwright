@@ -13,7 +13,7 @@
     "test:visual:acme": "npx playwright test example-applitools.spec.ts --project=chromium",
     "test:visual:playwright": "npx playwright test example3.spec.ts --project=all-browsers-and-tests",
     "test:solo": "npx playwright test -g '@solo'",
-    "test:deploy": "npx playwright test myExample.spec.ts"
+    "test:deploy": "npx playwright test tests/myExample.spec.ts --project=chromium --ui"
   },
   "keywords": [],
   "author": "",
