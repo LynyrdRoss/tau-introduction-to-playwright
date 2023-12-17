@@ -1,30 +1,47 @@
-import { test, expect } from '@playwright/test'
+import { test } from '@playwright/test'
+
+import { HomePage } from '../pages/home-page'
+import { TopMenuPage } from '../pages/top-menu-page'
+
+let homePage: HomePage
+let topMenu: TopMenuPage
+
+const introPageUrl: RegExp = /.*intro/
+const javaPageUrl: RegExp = /.*java*/
 
 test.beforeEach(async ({ page }, testInfo) => {
+  homePage = new HomePage(page)
+
   console.log(`Running ${testInfo.title}`)
-  await page.goto('https://playwright.dev/')
+  homePage.visitUrl()
+  await page.waitForTimeout(1000)
 })
 
-test('open webpage', async ({ page }) => {
-  await expect(page).toHaveTitle(/testing for modern web apps | Playwright/)
-})
+test.describe('Playwright website test', () => {
+  test('open webpage', async () => {
+    homePage.assertHomeTitle()
+  })
 
-test('click at Get Started', async ({ page }) => {
-  await page.getByRole('link', { name: 'Get Started' }).click()
+  test('click at Get Started', async ({ page }) => {
+    topMenu = new TopMenuPage(page)
+    await topMenu.getStartedLink.click()
 
-  await expect(page).toHaveURL(/.*intro/)
-})
+    topMenu.assertPageUrl(introPageUrl)
+  })
 
-test('click at Java language', async ({ page }) => {
-  const javaDescription = `Playwright is distributed as a set of Maven modules. The easiest way to use it is to add one dependency to your project's pom.xml as described below. If you're not familiar with Maven please refer to its documentation.`
+  test('click at Java language', async ({ page }) => {
+    topMenu = new TopMenuPage(page)
 
-  await page.getByRole('link', { name: 'Get started' }).click()
-  await page.getByRole('button', { name: 'Node.js' }).hover()
-  await page.getByRole('navigation', { name: 'Main' }).getByText('Java').click()
+    await test.step('action group', async () => {
+      await topMenu.getStartedLink.click()
+      await topMenu.nodeLink.hover()
+      await topMenu.javaLink.click()
+    })
 
-  await expect(page).toHaveURL(/.*java*/)
-  await expect(
-    page.getByText('Installing Playwright', { exact: true })
-  ).not.toBeVisible()
-  await expect(page.getByText(javaDescription)).toBeVisible()
+    await test.step('assert group', async () => {
+      topMenu.assertPageUrl(javaPageUrl)
+      topMenu.assertPageText()
+      topMenu.assertJavaDescriptionVisible()
+    })
+  })
 })
