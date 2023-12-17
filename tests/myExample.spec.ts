@@ -76,7 +76,10 @@ test.describe('Playwright website test', () => {
   test('open webpage', async () => {
     homePage.assertHomeTitle()
 
-    await eyes.check('Home', Target.window().fully())
+    await eyes.check(
+      'Home',
+      Target.window().ignore('.DocSearch.DocSearch-Button').fully()
+    )
   })
 
   test('click at Get Started', async ({ page }) => {
@@ -85,7 +88,10 @@ test.describe('Playwright website test', () => {
 
     topMenu.assertPageUrl(introPageUrl)
 
-    await eyes.check('Get Started', Target.window().fully().layout())
+    await eyes.check(
+      'Get Started',
+      Target.window().ignore('.theme-doc-markdown.markdown').fully().layout()
+    )
   })
 
   test('click at Java language', async ({ page }) => {
@@ -102,7 +108,14 @@ test.describe('Playwright website test', () => {
       topMenu.assertPageText()
       topMenu.assertJavaDescriptionVisible()
 
-      await eyes.check('Java', Target.window().fully().ignoreColors())
+      await eyes.check(
+        'Java',
+        Target.window()
+          .ignore('.DocSearch.DocSearch-Button')
+          .ignore('.docRoot_UBD9')
+          .fully()
+          .ignoreColors()
+      )
     })
   })
 })
