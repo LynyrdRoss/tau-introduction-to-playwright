@@ -11,7 +11,7 @@
     "test:e2e:smoke": "npx playwright test tests-examples/ --grep @smoke --project=chromium",
     "test:e2e:non-smoke": "npx playwright test tests-examples/ --grep-invert @smoke --project=firefox",
     "test:visual:acme": "npx playwright test example-applitools.spec.ts --project=chromium",
-    "test:visual:all": "npx playwright test myExample.spec.ts --project=all-browsers-and-tests",
+    "test:visual:all": "npx playwright test tests/myExample.spec.ts --project=all-browsers-and-tests",
     "test:solo": "npx playwright test -g '@solo'",
     "test:deploy": "npx playwright test tests/myExample.spec.ts --project=chromium --ui"
   },
